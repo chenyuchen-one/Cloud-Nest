@@ -38,4 +38,4 @@ $\Huge \color{red}  这样做服务器会坏掉$
 
 # 访问 [这个网站]() 来了解更多 
 
-[English]()/中文(简体)
+[English](https://chenyuchen-one.github.io/Cloud-Nest/)/中文(简体)
