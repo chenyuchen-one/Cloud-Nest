@@ -38,4 +38,4 @@ $\Huge \color{red}  The \ Sever \ Will \ Broken!$
 
 # Ask [This Website]() To see more about this sever!
 
-哦，你看不懂吗?其实这个服务器是中文的。(●'◡'●)
+English/[简体(中文)](./zh/Readme.md)
