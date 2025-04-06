@@ -34,6 +34,6 @@ PVP 在这个服务器上被允许，但是你不可以使用外挂，否则会�
 
 1. `/hub`  这个指令可以让你快速回城。
 
-# 访问 [这个网站]() 来了解更多 
+# 访问 [这个网站](./sever.md) 来了解更多 
 
 [English](https://chenyuchen-one.github.io/Cloud-Nest/README.html)/中文(简体)
