@@ -21,7 +21,7 @@ You have to protect your bed and destroy the other's bed. If you don't have bed.
 
 The two players will stand at the two coner of the $7\times7$ block squre.Which player fall is the loser.
 
-4.Pot$\color{red} (Not \ ready)$:
+4.Pot $\color{red} (Not \ ready)$:
 
 You and your enemies will stand in a huge area and fight.Who died first is the loser.
 
@@ -29,3 +29,13 @@ You and your enemies will stand in a huge area and fight.Who died first is the l
 If you think pvp is not fit , come and survival with me!
 
 $\Huge \color{red} Do \ not \ biuld \ the \ big \ redstone \ matchine!$
+
+$\Huge \color{red}  The \ Sever \ Will \ Broken!$
+
+## Commands of this sever
+
+1. `/hub`  This is a command to llet you go to the main quickly.
+
+# Ask [This Website]() To see more about this sever!
+
+哦，你看不懂吗?其实这个服务器是中文的。(●'◡'●)
