@@ -11,7 +11,7 @@ There are 4 kinds of games you can choose:
 
 The two players will fight on a bridge.The one which died is the loser.
 
-2.Bed fight $\color{red}(Not ready)$:
+2.Bed fight $\color{red}(Not \ ready)$:
 
 You have to protect your bed and destroy the other's bed. If you don't have bed.You can't rebirth.
 
@@ -21,11 +21,11 @@ You have to protect your bed and destroy the other's bed. If you don't have bed.
 
 The two players will stand at the two coner of the $7\times7$ block squre.Which player fall is the loser.
 
-4.Pot$\color{green}(Not ready)$:
+4.Pot$\color{red} (Not \ ready)$:
 
 You and your enemies will stand in a huge area and fight.Who died first is the loser.
 
 ### 2.Survival
 If you think pvp is not fit , come and survival with me!
 
-$\Huge \color{red} Do not biuld the big redstone matchine!$
+$\Huge \color{red} Do \ not \ biuld \ the \ big \ redstone \ matchine!$
