@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <title>⚔️ 起床战争服务器 – Minecraft Paper 1.21.1</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <!-- Google Font：思源黑体 -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;600;700&display=swap"
+          rel="stylesheet">
+
     <style>
         /* ---------- 基础布局 ---------- */
         *{margin:0;padding:0;box-sizing:border-box;}
@@ -17,14 +20,27 @@
             display:flex;
             align-items:center;
             justify-content:center;
+            overflow:hidden;                     /* 防止出现滚动条 */
         }
         .overlay{
-            width:100%;
-            height:100%;
+            width:100%;height:100%;
             background:rgba(0,0,0,0.55);
-            position:absolute;
-            top:0;left:0;
+            position:absolute;top:0;left:0;
         }
+
+        /* ---------- 黑色遮罩层（与 index.html 的黑色动画匹配） ---------- */
+        #fadeOverlay{
+            position:fixed;
+            inset:0;                              /* 全屏 */
+            background:#0d0d0d;                  /* 起始深黑 */
+            z-index:9999;
+            animation:fadeOut 2.4s forwards;    /* 与 index.html 动画时长保持一致 */
+        }
+        @keyframes fadeOut{
+            0%   {opacity:1;}
+            100% {opacity:0;}
+        }
+
         .container{
             position:relative;
             max-width:960px;
@@ -37,111 +53,82 @@
             box-shadow:0 8px 32px rgba(0,0,0,0.6);
             z-index:1;
         }
+
         /* ---------- LOGO & 标题 ---------- */
-        .logo img{
-            width:130px;
-            border-radius:12px;
-        }
-        h1{
-            margin:15px 0 5px;
-            font-size:2.8rem;
-            font-weight:700;
-        }
-        .subtitle{
-            font-size:1.2rem;
-            opacity:0.85;
-            margin-bottom:30px;
-        }
+        .logo img{width:130px;border-radius:12px;}
+        h1{margin:15px 0 5px;font-size:2.8rem;font-weight:700;}
+        .subtitle{font-size:1.2rem;opacity:0.85;margin-bottom:30px;}
+
         /* ---------- 公告栏 ---------- */
         .announcement{
-            background:#ffdd57;
-            color:#222;
-            padding:10px 15px;
-            border-radius:8px;
-            margin-bottom:25px;
-            font-weight:600;
-            overflow:hidden;
-            position:relative;
+            background:#ffdd57;color:#222;
+            padding:10px 15px;border-radius:8px;
+            margin-bottom:25px;font-weight:600;
+            overflow:hidden;position:relative;
         }
         .announcement p{
-            margin:0;
-            white-space:nowrap;
-            animation: scroll 12s linear infinite;
+            margin:0;white-space:nowrap;
+            animation:scroll 12s linear infinite;
         }
         @keyframes scroll{
             0%   {transform:translateX(100%);}
             100% {transform:translateX(-100%);}
         }
+
         /* ---------- 服务器信息卡片 ---------- */
         .info-card{
             background:rgba(255,255,255,0.1);
-            border-radius:10px;
-            padding:20px;
-            margin:15px auto;
-            max-width:460px;
+            border-radius:10px;padding:20px;
+            margin:15px auto;max-width:460px;
             transition:transform .3s;
         }
         .info-card:hover{transform:translateY(-4px);}
         .info-card strong{color:#ffdd57;}
+
+        /* ---------- 倒计时卡片 ---------- */
+        .countdown-card{
+            background:rgba(255,255,255,0.1);
+            border-radius:10px;padding:20px;
+            margin:20px auto;max-width:460px;
+            color:#ffdd57;
+            font-size:1.1rem;
+        }
+
         /* ---------- 按钮 ---------- */
         .btn{
-            display:inline-block;
-            margin:12px 8px;
-            padding:12px 24px;
-            font-size:1rem;
-            color:#fff;
-            background:#ff5722;
-            border:none;
-            border-radius:6px;
-            cursor:pointer;
-            text-decoration:none;
+            display:inline-block;margin:12px 8px;
+            padding:12px 24px;font-size:1rem;
+            color:#fff;background:#ff5722;
+            border:none;border-radius:6px;
+            cursor:pointer;text-decoration:none;
             transition:background .25s,transform .2s;
         }
-        .btn:hover{
-            background:#e64a19;
-            transform:scale(1.05);
-        }
+        .btn:hover{background:#e64a19;transform:scale(1.05);}
         .btn.copy{background:#2196f3;}
         .btn.copy:hover{background:#1976d2;}
-        /* ---------- QQ 群 ---------- */
-        .qq-section{
-            margin-top:20px;
-            font-size:1rem;
-        }
+
+        /* ---------- QQ 区域 ---------- */
+        .qq-section{margin-top:20px;font-size:1rem;}
         .qq-section a{
-            color:#ffdd57;
-            text-decoration:none;
-            cursor:pointer;
+            color:#ffdd57;text-decoration:none;cursor:pointer;
         }
         .qq-section a:hover{text-decoration:underline;}
+
         /* ---------- 玩法卡片 ---------- */
         .play-card{
             background:rgba(255,255,255,0.08);
-            border-radius:10px;
-            padding:20px;
-            margin:20px auto;
-            max-width:560px;
+            border-radius:10px;padding:20px;
+            margin:20px auto;max-width:560px;
             text-align:left;
         }
-        .play-card h3{
-            margin-bottom:10px;
-            color:#ffdd57;
-        }
-        .play-card ul{
-            list-style:disc inside;
-            line-height:1.6;
-        }
+        .play-card h3{margin-bottom:10px;color:#ffdd57;}
+        .play-card ul{list-style:disc inside;line-height:1.6;}
+
         /* ---------- 页脚 ---------- */
-        .footer{
-            margin-top:30px;
-            font-size:0.85rem;
-            opacity:0.7;
-        }
-        .footer a{
-            color:#ffdd57;
-            text-decoration:none;
-        }
+        .footer{margin-top:30px;font-size:0.85rem;opacity:0.7;}
+        .footer a{color:#ffdd57;text-decoration:none;}
         .footer a:hover{text-decoration:underline;}
+
         /* ---------- 响应式 ---------- */
         @media(max-width:600px){
             h1{font-size:2.2rem;}
@@ -150,22 +137,29 @@
     </style>
 </head>
 <body>
+    <!-- ① 黑色遮罩层，页面加载后淡出 -->
+    <div id="fadeOverlay"></div>
+
     <div class="overlay"></div>
+
     <div class="container">
         <!-- LOGO -->
         <div class="logo"><img src="img/logo.png" alt="服务器 LOGO"></div>
 
-        <h1>⚔️ 起床战争服务器</h1>
+        <h1>⚔️ 起床战争</h1>
         <p class="subtitle">服务器版本: Minecraft JE 1.21.1</p>
 
-        <!-- 公告栏（可自行添加多条） -->
-        <div class="announcement"><p>欢迎来到起床战争！| 单八模式已开放 2 地图 | 2v2 模式正在制作，即将开放 | 大厅</p></div>
+        <!-- 公告栏 -->
+        <div class="announcement"><p>欢迎来到起床战争！| 单八模式已开放 2 地图 | 2v2 模式正在制作，即将开放 | 新大厅上线</p></div>
 
         <!-- 服务器信息 -->
         <div class="info-card">
             <p><strong>服务器 IP：</strong>om.rainplay.cn:26624</p>
-			<p><strong>备用 IP：</strong>omt.rainplay.cn:26624</p>
+            <p><strong>备用 IP：</strong>omt.rainplay.cn:26624</p>
         </div>
+
+        <!-- ✅ 新增：倒计时卡片 -->
+        <div class="countdown-card" id="countdown">加载倒计时中…</div>
 
         <!-- 按钮组 -->
         <button class="btn copy" onclick="copyIP()">复制 IP</button>
@@ -176,12 +170,12 @@
             <a id="qq-number" onclick="copyQQ()">123456789</a>（点击复制）
         </div>
 
-        <!-- 服务器玩法简介 -->
+        <!-- 玩法简介 -->
         <div class="play-card">
             <button class="btn copy" onclick="jump()">举报作弊玩家</button>
             <button class="btn copy" onclick="goToParentIndex()">Language to English</button>
-			<ul>
-            </ul>
+            <button class="btn copy" onclick="act()">活动详情</button>
+			<ul><!-- 玩法说明可自行填入 --></ul>
         </div>
 
         <!-- 页脚 -->
@@ -191,31 +185,80 @@
     </div>
 
     <script>
+        // ① 动画结束后移除遮罩层，防止阻塞交互
+        const fadeOverlay = document.getElementById('fadeOverlay');
+        fadeOverlay.addEventListener('animationend', () => fadeOverlay.remove());
+
+        // 跳转到举报页面
+        function jump(){ window.location.href="./report.html"; }
+
+        // 切换语言（返回上一级目录的 index.html 并传入 lang 参数）
+        function goToParentIndex() {
+            const path = window.location.pathname;
+            const parent = path.substring(0, path.lastIndexOf('/'));
+            const grand = parent.substring(0, parent.lastIndexOf('/'));
+            const target = `${grand}/index.html?lang=en_us`;
+            window.location.href = target;
+        }
+		function act(){
+			window.location.href= "./event.html"
+		}
         // 复制服务器 IP
-		function jump(){
-			window.location.href="./report.html";
-		}
-		function goToParentIndex() {
-		    // 1. 取得当前路径（不包括查询、hash）
-		    const path = window.location.pathname;                 // e.g. /a/b/report.html
-		    // 2. 去掉最后一段（文件或目录）
-		    const parentPath = path.substring(0, path.lastIndexOf('/')); // /a/b
-		    // 3. 再上一级目录
-		    const grandParent = parentPath.substring(0, parentPath.lastIndexOf('/')); // /a
-		    // 4. 拼接目标文件
-		    const target = `${grandParent}/index.html?lang=en_us`;
-		    // 5. 跳转
-		    window.location.href = target;
-		}
         function copyIP(){
             const ip = "om.rainplay.cn:26624";
             navigator.clipboard.writeText(ip).then(()=>alert("已复制服务器地址：" + ip));
         }
+
         // 复制 QQ 群号
         function copyQQ(){
             const qq = "123456789";
             navigator.clipboard.writeText(qq).then(()=>alert("已复制 QQ 群号：" + qq));
         }
+
+        /* -------------------------------------------------
+           ✅ 倒计时功能
+           - 在这里设置活动的开始时间和结束时间（ISO 8601 或时间戳均可）
+           - 页面会自动显示「距离开始」或「活动进行中」以及剩余时间
+           ------------------------------------------------- */
+        const startTime = new Date('2025-10-01T12:00:00+08:00'); // 活动开始时间
+        const endTime   = new Date('2025-10-07T12:00:00+08:00'); // 活动结束时间
+
+        const countdownEl = document.getElementById('countdown');
+
+        function formatNumber(num){ return num < 10 ? '0' + num : num; }
+
+        function updateCountdown(){
+            const now = new Date();
+
+            if (now < startTime) {               // 未开始
+                const diff = startTime - now;
+                const d = Math.floor(diff / (1000*60*60*24));
+                const h = Math.floor(diff / (1000*60*60) % 24);
+                const m = Math.floor(diff / (1000*60) % 60);
+                const s = Math.floor(diff / 1000 % 60);
+                countdownEl.innerHTML = `
+                    <strong>活动即将开始</strong><br>
+                    距离开始还有 <span>${d}天 ${formatNumber(h)}时 ${formatNumber(m)}分 ${formatNumber(s)}秒</span>
+                `;
+            } else if (now >= startTime && now <= endTime) { // 正在进行
+                const diff = endTime - now;
+                const d = Math.floor(diff / (1000*60*60*24));
+                const h = Math.floor(diff / (1000*60*60) % 24);
+                const m = Math.floor(diff / (1000*60) % 60);
+                const s = Math.floor(diff / 1000 % 60);
+                countdownEl.innerHTML = `
+                    <strong>活动进行中</strong><br>
+                    剩余时间 <span>${d}天 ${formatNumber(h)}时 ${formatNumber(m)}分 ${formatNumber(s)}秒</span>
+                `;
+            } else {                               // 已结束
+                countdownEl.innerHTML = `<strong>活动已结束</strong>`;
+                clearInterval(timer); // 停止循环
+            }
+        }
+
+        // 初始立即执行一次，随后每秒更新
+        updateCountdown();
+        const timer = setInterval(updateCountdown, 1000);
     </script>
 </body>
 </html>

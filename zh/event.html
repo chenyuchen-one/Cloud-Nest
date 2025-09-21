@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>⚔️ 起床战争 – 活动详情</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Font：思源黑体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ---------- 颜色、间距变量 ---------- */
+        :root{
+            --primary:#ff5722;
+            --primary-dark:#e64a19;
+            --accent:#ffdd57;
+            --bg-img:url('img/background.jpg');
+            --overlay:#00000088;
+            --card-bg:rgba(0,0,0,0.45);
+            --card-bg-light:rgba(255,255,255,0.1);
+            --radius:12px;
+            --gap:20px;
+        }
+
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{
+            font-family:'Noto Sans SC',sans-serif;
+            color:#fff;
+            background:var(--bg-img) no-repeat center/cover fixed;
+            min-height:100vh;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            overflow:hidden;
+        }
+        .overlay{
+            position:absolute; inset:0;
+            background:var(--overlay);
+        }
+
+        /* ---------- 黑色淡入遮罩 ---------- */
+        #fadeOverlay{
+            position:fixed; inset:0;
+            background:#0d0d0d;
+            z-index:9999;
+            animation:fadeOut 2.4s forwards;
+        }
+        @keyframes fadeOut{
+            from{opacity:1;} to{opacity:0;}
+        }
+
+        .container{
+            position:relative;
+            max-width:960px; width:90%;
+            background:var(--card-bg);
+            backdrop-filter:blur(8px);
+            border-radius:var(--radius);
+            padding:40px var(--gap);
+            text-align:center;
+            box-shadow:0 8px 32px rgba(0,0,0,0.6);
+            z-index:1;
+        }
+
+        .logo img{width:130px;border-radius:var(--radius);}
+        h1{
+            margin:15px 0 5px;
+            font-size:2.8rem;
+            font-weight:700;
+            background:linear-gradient(45deg,var(--accent),#fff);
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+        }
+        .subtitle{
+            font-size:1.2rem;
+            opacity:0.85;
+            margin-bottom:30px;
+        }
+
+        /* ---------- 公告栏 ---------- */
+        .announcement{
+            background:var(--accent);
+            color:#222;
+            padding:10px 15px;
+            border-radius:8px;
+            margin-bottom:var(--gap);
+            font-weight:600;
+            overflow:hidden;
+            position:relative;
+        }
+        .announcement p{
+            margin:0;
+            white-space:nowrap;
+            animation:scroll 12s linear infinite;
+        }
+        @keyframes scroll{
+            from{transform:translateX(100%);}
+            to{transform:translateX(-100%);}
+        }
+
+        /* ---------- 卡片通用样式 ---------- */
+        .info-card,.countdown-card,.leaderboard-card{
+            background:var(--card-bg-light);
+            border-radius:10px;
+            padding:20px;
+            margin:var(--gap) auto;
+            max-width:460px;
+            color:var(--accent);
+            transition:transform .3s;
+        }
+        .info-card:hover,
+        .countdown-card:hover,
+        .leaderboard-card:hover{
+            transform:translateY(-4px);
+        }
+        .countdown-card{font-size:1.1rem;}
+        .leaderboard-card{font-size:1rem;}
+
+        /* ---------- 按钮 ---------- */
+        .btn{
+            display:inline-block;
+            margin:12px 8px;
+            padding:12px 24px;
+            font-size:1rem;
+            color:#fff;
+            background:var(--primary);
+            border:none;
+            border-radius:6px;
+            cursor:pointer;
+            text-decoration:none;
+            transition:background .25s,transform .2s;
+        }
+        .btn:hover{
+            background:var(--primary-dark);
+            transform:scale(1.05);
+        }
+        .btn.copy{background:#2196f3;}
+        .btn.copy:hover{background:#1976d2;}
+
+        .qq-section{
+            margin-top:20px;
+            font-size:1rem;
+        }
+        .qq-section a{
+            color:var(--accent);
+            text-decoration:none;
+            cursor:pointer;
+        }
+        .qq-section a:hover{text-decoration:underline;}
+
+        /* ---------- 活动简介 ---------- */
+        .event-detail{
+            background:rgba(255,255,255,0.08);
+            border-radius:10px;
+            padding:20px;
+            margin:var(--gap) auto;
+            max-width:560px;
+            text-align:left;
+        }
+        .event-detail h3{
+            margin-bottom:10px;
+            color:var(--accent);
+        }
+        .event-detail ul{
+            list-style:disc inside;
+            line-height:1.6;
+        }
+
+        .footer{
+            margin-top:30px;
+            font-size:0.85rem;
+            opacity:0.7;
+        }
+        .footer a{
+            color:var(--accent);
+            text-decoration:none;
+        }
+        .footer a:hover{text-decoration:underline;}
+
+        /* ---------- 主体布局（左侧内容 + 右侧排行榜） ---------- */
+        .main-wrapper{
+            display:flex;
+            justify-content:space-between;
+            align-items:flex-start;
+            gap:var(--gap);
+            flex-wrap:wrap;      /* 窄屏自动换行 */
+        }
+        .left-column{
+            flex:1 1 300px;       /* 最小 300px，宽屏占据剩余空间 */
+        }
+        .right-column{
+            flex:0 0 300px;       /* 固定宽度 300px */
+        }
+
+        /* ---------- 响应式 ---------- */
+        @media(max-width:600px){
+            h1{font-size:2.2rem;}
+            .subtitle{font-size:1rem;}
+            .container{padding:30px var(--gap);}
+            .right-column{flex-basis:100%;}   /* 移到下方 */
+        }
+    </style>
+</head>
+<body>
+    <!-- 黑色淡入遮罩 -->
+    <div id="fadeOverlay"></div>
+    <div class="overlay"></div>
+
+    <div class="container">
+        <!-- LOGO（可自行添加） -->
+        <div class="logo"><img src="img/logo.png" alt="LOGO"></div>
+
+        <h1>⚔️ 起床战争</h1>
+        <p class="subtitle">服务器版本: Minecraft JE 1.21.1</p>
+
+        <!-- 公告栏 -->
+        <div class="announcement"><p>活动将于 2025‑10‑01 00:00:00 开始</p></div>
+
+        <!-- ---------- 内容区域 ---------- -->
+        <div class="main-wrapper">
+            <!-- 左侧：倒计时、活动简介、按钮等 -->
+            <div class="left-column">
+                <div class="countdown-card" id="countdown">加载倒计时中…</div>
+
+                <div class="event-detail">
+                    <h3>活动简介</h3>
+                    <ul>
+                        <li>活动时间：2025‑10‑01 00:00 – 2025‑10‑07 00:00（UTC+8）</li>
+                        <li>全服开启「起床战争」专属新赛季，排行榜前 10 将获得【2025 竞技达人】称号。</li>
+                        <li>每日挑战：等待活动开始后揭晓。</li>
+                        <li>积分排行榜前 3 名玩家将在活动结束后获得专属皮肤奖励。</li>
+                    </ul>
+                </div>
+
+                <button class="btn copy" onclick="copyIP()">复制 IP</button>
+                <button class="btn copy" onclick="goBack()">返回首页</button>
+
+                <div class="qq-section">
+                    <strong>官方 QQ 群：</strong>
+                    <a id="qq-number" onclick="copyQQ()">123456789</a>（点击复制）
+                </div>
+            </div>
+
+            <!-- 右侧：积分排行榜 -->
+            <div class="right-column">
+                <div class="leaderboard-card" id="leaderboard">
+                    <h3>活动积分排行榜</h3>
+                    <ol id="rankList">
+                        <li>请等待活动开始</li>
+						<li>请等待活动开始</li>
+						<li>请等待活动开始</li>
+						<li>请等待活动开始</li>
+						<li>请等待活动开始</li>
+						<li>请等待活动开始</li>
+						<li>请等待活动开始</li>
+						<li>请等待活动开始</li>
+						<li>请等待活动开始</li>
+						<li>请等待活动开始</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- 页脚 -->
+        <div class="footer">
+            © 2025 <strong>om.rainplay.cn:26624</strong> ch2012enyc 提供技术支持
+        </div>
+    </div>
+
+    <script>
+        // 1️⃣ 动画结束后移除遮罩层
+        const fadeOverlay = document.getElementById('fadeOverlay');
+        fadeOverlay.addEventListener('animationend', () => fadeOverlay.remove());
+
+        // 2️⃣ 返回首页
+        function goBack(){
+            window.location.href = '../index.html?lang=zh_cn';
+        }
+
+        // 3️⃣ 复制 IP / QQ
+        function copyIP(){
+            const ip = "om.rainplay.cn:26624";
+            navigator.clipboard.writeText(ip).then(()=>alert("已复制服务器地址：" + ip));
+        }
+        function copyQQ(){
+            const qq = "123456789";
+            navigator.clipboard.writeText(qq).then(()=>alert("已复制 QQ 群号：" + qq));
+        }
+
+        // 4️⃣ 倒计时逻辑
+        const startTime = new Date('2025-10-01T00:00:00+08:00');
+        const endTime   = new Date('2025-10-07T00:00:00+08:00');
+        const countdownEl = document.getElementById('countdown');
+
+        function formatNumber(n){ return n < 10 ? '0' + n : n; }
+
+        function updateCountdown(){
+            const now = new Date();
+
+            if (now < startTime){
+                const diff = startTime - now;
+                const d = Math.floor(diff / (1000*60*60*24));
+                const h = Math.floor(diff / (1000*60*60) % 24);
+                const m = Math.floor(diff / (1000*60) % 60);
+                const s = Math.floor(diff / 1000 % 60);
+                countdownEl.innerHTML = `
+                    <strong>活动即将开始</strong><br>
+                    距离开始还有 <span>${d}天 ${formatNumber(h)}时 ${formatNumber(m)}分 ${formatNumber(s)}秒</span>
+                `;
+            }else if (now <= endTime){
+                const diff = endTime - now;
+                const d = Math.floor(diff / (1000*60*60*24));
+                const h = Math.floor(diff / (1000*60*60) % 24);
+                const m = Math.floor(diff / (1000*60) % 60);
+                const s = Math.floor(diff / 1000 % 60);
+                countdownEl.innerHTML = `
+                    <strong>活动进行中</strong><br>
+                    剩余时间 <span>${d}天 ${formatNumber(h)}时 ${formatNumber(m)}分 ${formatNumber(s)}秒</span>
+                `;
+            }else{
+                countdownEl.innerHTML = `<strong>活动已结束</strong>`;
+                clearInterval(timer);
+            }
+        }
+        updateCountdown();
+        const timer = setInterval(updateCountdown, 1000);
+
+        // 5️⃣ 实时排行榜（示例）——如有后端接口可在此处获取数据并渲染
+        // const rankListEl = document.getElementById('rankList');
+        // fetch('your-api-url')
+        //   .then(r=>r.json())
+        //   .then(data=>{ rankListEl.innerHTML = data.map(p=>`<li>${p.name} - ${p.score} 分</li>`).join(''); });
+    </script>
+</body>
+</html>
