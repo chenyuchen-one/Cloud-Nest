@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Wait for a minute</title>
+</head>
+<body>
+    <script>
+        // ① 读取 URL 中的查询参数
+        function getQueryParam(name) {
+            const params = new URLSearchParams(window.location.search);
+            return params.get(name);
+        }
+
+        // ② 根据 lang 参数决定跳转目标
+        const lang = getQueryParam('lang');   // 例如: "zh_cn"
+        if (lang) {
+            // 这里可以自行扩展更多语言的映射关系
+            const map = {
+                'zh_cn': '/zh/main.html',
+                // 示例：如果以后还有英文页面，可继续添加
+                'en_us': '/en/main.html',
+                // 'ja_jp': '/ja/main.html',
+            };
+
+            const target = map[lang.toLowerCase()];
+            if (target) {
+                // 使用 replace 防止产生历史记录（用户点击“返回”不会回到中间页）
+                window.location.replace(target);
+            } else {
+                // 未匹配到对应页面时的默认处理（可自行改为跳转首页等）
+                //console.warn(`未找到 lang="${lang}" 对应的页面`);
+            }
+        } else {
+            // 没有 lang 参数时的默认行为
+            window.location.href="/en/main.html"
+        }
+    </script>
+</body>
+</html>
