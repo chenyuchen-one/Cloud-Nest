@@ -17,9 +17,9 @@
         if (lang) {
             // 这里可以自行扩展更多语言的映射关系
             const map = {
-                'zh_cn': '/zh/main.html',
+                'zh_cn': './zh/main.html',
                 // 示例：如果以后还有英文页面，可继续添加
-                'en_us': '/en/main.html',
+                'en_us': './en/main.html',
                 // 'ja_jp': '/ja/main.html',
             };
 
@@ -33,7 +33,7 @@
             }
         } else {
             // 没有 lang 参数时的默认行为
-            window.location.href="/en/main.html"
+            window.location.href="./en/main.html"
         }
     </script>
 </body>
