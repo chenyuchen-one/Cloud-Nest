@@ -1,1 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>⚔️ 起床战争服务器 – Minecraft Paper 1.21.1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Font：思源黑体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ---------- 基础布局 ---------- */
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{
+            font-family:'Noto Sans SC',sans-serif;
+            color:#fff;
+            background:url('img/background.jpg') no-repeat center/cover fixed;
+            min-height:100vh;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
+        .overlay{
+            width:100%;
+            height:100%;
+            background:rgba(0,0,0,0.55);
+            position:absolute;
+            top:0;left:0;
+        }
+        .container{
+            position:relative;
+            max-width:960px;
+            width:90%;
+            background:rgba(0,0,0,0.45);
+            backdrop-filter:blur(8px);
+            border-radius:12px;
+            padding:40px 30px;
+            text-align:center;
+            box-shadow:0 8px 32px rgba(0,0,0,0.6);
+            z-index:1;
+        }
+        /* ---------- LOGO & 标题 ---------- */
+        .logo img{
+            width:130px;
+            border-radius:12px;
+        }
+        h1{
+            margin:15px 0 5px;
+            font-size:2.8rem;
+            font-weight:700;
+        }
+        .subtitle{
+            font-size:1.2rem;
+            opacity:0.85;
+            margin-bottom:30px;
+        }
+        /* ---------- 公告栏 ---------- */
+        .announcement{
+            background:#ffdd57;
+            color:#222;
+            padding:10px 15px;
+            border-radius:8px;
+            margin-bottom:25px;
+            font-weight:600;
+            overflow:hidden;
+            position:relative;
+        }
+        .announcement p{
+            margin:0;
+            white-space:nowrap;
+            animation: scroll 12s linear infinite;
+        }
+        @keyframes scroll{
+            0%   {transform:translateX(100%);}
+            100% {transform:translateX(-100%);}
+        }
+        /* ---------- 服务器信息卡片 ---------- */
+        .info-card{
+            background:rgba(255,255,255,0.1);
+            border-radius:10px;
+            padding:20px;
+            margin:15px auto;
+            max-width:460px;
+            transition:transform .3s;
+        }
+        .info-card:hover{transform:translateY(-4px);}
+        .info-card strong{color:#ffdd57;}
+        /* ---------- 按钮 ---------- */
+        .btn{
+            display:inline-block;
+            margin:12px 8px;
+            padding:12px 24px;
+            font-size:1rem;
+            color:#fff;
+            background:#ff5722;
+            border:none;
+            border-radius:6px;
+            cursor:pointer;
+            text-decoration:none;
+            transition:background .25s,transform .2s;
+        }
+        .btn:hover{
+            background:#e64a19;
+            transform:scale(1.05);
+        }
+        .btn.copy{background:#2196f3;}
+        .btn.copy:hover{background:#1976d2;}
+        /* ---------- QQ 群 ---------- */
+        .qq-section{
+            margin-top:20px;
+            font-size:1rem;
+        }
+        .qq-section a{
+            color:#ffdd57;
+            text-decoration:none;
+            cursor:pointer;
+        }
+        .qq-section a:hover{text-decoration:underline;}
+        /* ---------- 玩法卡片 ---------- */
+        .play-card{
+            background:rgba(255,255,255,0.08);
+            border-radius:10px;
+            padding:20px;
+            margin:20px auto;
+            max-width:560px;
+            text-align:left;
+        }
+        .play-card h3{
+            margin-bottom:10px;
+            color:#ffdd57;
+        }
+        .play-card ul{
+            list-style:disc inside;
+            line-height:1.6;
+        }
+        /* ---------- 页脚 ---------- */
+        .footer{
+            margin-top:30px;
+            font-size:0.85rem;
+            opacity:0.7;
+        }
+        .footer a{
+            color:#ffdd57;
+            text-decoration:none;
+        }
+        .footer a:hover{text-decoration:underline;}
+        /* ---------- 响应式 ---------- */
+        @media(max-width:600px){
+            h1{font-size:2.2rem;}
+            .subtitle{font-size:1rem;}
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+    <div class="container">
+        <!-- LOGO -->
+        <div class="logo"><img src="img/logo.png" alt="服务器 LOGO"></div>
 
+        <h1>⚔️ 起床战争服务器</h1>
+        <p class="subtitle">服务器版本: Minecraft JE 1.21.1</p>
+
+        <!-- 公告栏（可自行添加多条） -->
+        <div class="announcement"><p>欢迎来到起床战争！| 单八模式已开放 2 地图 | 2v2 模式正在制作，即将开放 | 大厅</p></div>
+
+        <!-- 服务器信息 -->
+        <div class="info-card">
+            <p><strong>服务器 IP：</strong>om.rainplay.cn:26624</p>
+			<p><strong>备用 IP：</strong>omt.rainplay.cn:26624</p>
+        </div>
+
+        <!-- 按钮组 -->
+        <button class="btn copy" onclick="copyIP()">复制 IP</button>
+
+        <!-- QQ 群 -->
+        <div class="qq-section">
+            <strong>官方 QQ 群：</strong>
+            <a id="qq-number" onclick="copyQQ()">123456789</a>（点击复制）
+        </div>
+
+        <!-- 服务器玩法简介 -->
+        <div class="play-card">
+            <button class="btn copy" onclick="jump()">举报作弊玩家</button>
+            <button class="btn copy" onclick="goToParentIndex()">Language to English</button>
+			<ul>
+            </ul>
+        </div>
+
+        <!-- 页脚 -->
+        <div class="footer">
+            © 2025 <strong>om.rainplay.cn:26624</strong> ch2012enyc 提供技术支持
+        </div>
+    </div>
+
+    <script>
+        // 复制服务器 IP
+		function jump(){
+			window.location.href="./report.html";
+		}
+		function goToParentIndex() {
+		    // 1. 取得当前路径（不包括查询、hash）
+		    const path = window.location.pathname;                 // e.g. /a/b/report.html
+		    // 2. 去掉最后一段（文件或目录）
+		    const parentPath = path.substring(0, path.lastIndexOf('/')); // /a/b
+		    // 3. 再上一级目录
+		    const grandParent = parentPath.substring(0, parentPath.lastIndexOf('/')); // /a
+		    // 4. 拼接目标文件
+		    const target = `${grandParent}/index.html?lang=en_us`;
+		    // 5. 跳转
+		    window.location.href = target;
+		}
+        function copyIP(){
+            const ip = "om.rainplay.cn:26624";
+            navigator.clipboard.writeText(ip).then(()=>alert("已复制服务器地址：" + ip));
+        }
+        // 复制 QQ 群号
+        function copyQQ(){
+            const qq = "123456789";
+            navigator.clipboard.writeText(qq).then(()=>alert("已复制 QQ 群号：" + qq));
+        }
+    </script>
+</body>
+</html>
