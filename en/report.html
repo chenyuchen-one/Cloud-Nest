@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Report Cheating Player</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        /* ---------- Base Layout ---------- */
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            background:#f5f5f5;
+            margin:0;
+            padding:0;
+        }
+        .container{
+            max-width:720px;
+            margin:40px auto;
+            background:#fff;
+            padding:20px;               /* ← fixed padding */
+            border-radius:8px;
+            box-shadow:0 2px 8px rgba(0,0,0,.1);
+        }
+        h1{
+            text-align:center;
+            color:#333;
+            margin-bottom:24px;
+        }
+        .note{
+            font-size:0.9em;
+            color:#666;
+            margin:8px 0;
+        }
+
+        /* ---------- Table ---------- */
+        .info-table{
+            width:100%;
+            border-collapse:collapse;
+            margin-top:12px;
+        }
+        .info-table th,
+        .info-table td{
+            border:1px solid #ddd;
+            padding:10px;
+            text-align:left;
+        }
+        .info-table th{
+            background:#f0f0f0;
+            font-weight:600;
+            color:#333;
+        }
+        .info-table td{
+            background:#fafafa;
+        }
+
+        /* ---------- Button Styles ---------- */
+        .btn{
+            display:inline-block            margin:12px 8px;
+            padding:12px 24px;
+            font-size:1rem;
+            color:#fff;
+            background:#ff5722;
+            border:none;
+            border-radius:6px;
+            cursor:pointer;
+            text-decoration:none;
+            transition:background .25s, transform .2s;
+        }
+        .btn:hover{
+            background:#e64a19;
+            transform:scale(1.05);
+        }
+        .btn.copy{background:#2196f3;}
+        .btn.copy:hover{background:#1976d2;}
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🚨 Report Cheating Player</h1>
+
+    <!-- 1️⃣ Report methods table (5 columns) -->
+    <table class="info-table">
+        <thead>
+            <tr>
+                <th>Report Method</th>
+                <th>Information</th>
+                <th>Recommendation Level</th>
+                <th>Processing Time</th>
+                <th>Handling Method</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>In‑game Report</td>
+                <td>Report via lobby NPC</td>
+                <td>⭐⭐⭐⭐⭐</td>
+                <td>10 minutes – 5 days</td>
+                <td>Anti‑cheat auto‑process, admin review & record</td>
+            </tr>
+            <tr>
+                <td>QQ Group Report</td>
+                <td>QQ:</td>
+                <td>⭐⭐⭐⭐</td>
+                <td>1 day – 7 days</td>
+                <td>Anti‑cheat auto‑process, admin review & record</td>
+            </tr>
+            <tr>
+                <td>QQ Private Message</td>
+                <td>QQ:</td>
+                <td>⭐⭐⭐</td>
+                <td>5 days+</td>
+                <td>File record review</td>
+            </tr>
+            <tr>
+                <>Email Report</td>
+                <td>QQ / Outlook:</td>
+                <td>⭐⭐</td>
+                <td>7 days+</td>
+                <td>File record review</td>
+            </tr>
+            <tr>
+                <td>Test</td>
+                <td>Test</td>
+                <td>Test</td>
+                <td>Test</td>
+                <td>Test</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Description notes -->
+    <p class="note">This information is used solely to verify cheating behavior; we will not disclose any personal data.</p>
+    <p class="note">We will review the report after submission and take action if the claim is valid.</p>
+
+    <!-- Return to the parent index page -->
+    <button class="btn copy" onclick="goToParentIndex()">Return to Main Page</button>
+</div>
+
+<script>
+/**
+ * Navigate to the parent directory of the current page and open index.html?lang=en_us.
+ * Works with both http(s) and file protocols (local testing).
+ */
+function goToParentIndex() {
+    // 1. Get the current pathname (without query or hash)
+    const path = window.location.pathname;                 // e.g. /a/b/report.html
+    // 2. Remove the last segment (file or folder)
+    const parentPath = path.substring(0, path.lastIndexOf('/')); // /a/b
+    // 3. Go one level higher
+    const grandParent = parentPath.substring(0, parentPath.lastIndexOf('/')); // /a
+    // 4. Build the target URL
+    const target = `${grandParent}/index.html?lang=en_us`;
+    // 5. Redirect
+    window.location.href = target;
+}
+
+/* The previous reportForm validation code has been removed because this page
+   does not contain a form. Add validation logic here if a form is added later. */
+</script>
+
+</body>
+</html>

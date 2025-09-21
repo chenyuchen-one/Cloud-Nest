@@ -1,1 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>⚔️ Bed Wars Server – Minecraft Paper 1.21.1</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Font：Noto Sans SC -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ---------- Base Layout ---------- */
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{
+            font-family:'Noto Sans SC',sans-serif;
+            color:#fff;
+            background:url('img/background.jpg') no-repeat center/cover fixed;
+            min-height:100vh;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
+        .overlay{
+            width:100%;
+            height:100%;
+            background:rgba(0,0,0,0.55);
+            position:absolute;
+            top:0;left:0;
+        }
+        .container{
+            position:relative;
+            max-width:960px;
+            width:90%;
+            background:rgba(0,0,0,0.45);
+            backdrop-filter:blur(8px);
+            border-radius:12px;
+            padding:40px 30px;
+            text-align:center;
+            box-shadow:0 8px 32px rgba(0,0,0,0.6);
+            z-index:1;
+        }
+        /* ---------- Logo & Title ---------- */
+        .logo img{
+            width:130px;
+            border-radius:12px;
+        }
+        h1{
+            margin:15px 0 5px;
+            font-size:2.8rem;
+            font-weight:700;
+        }
+        .subtitle{
+            font-size:1.2rem;
+            opacity:0.85;
+            margin-bottom:30px;
+        }
+        /* ---------- Announcement ---------- */
+        .announcement{
+            background:#ffdd57;
+            color:#222;
+            padding:10px 15px;
+            border-radius:8px;
+            margin-bottom:25px;
+            font-weight:600;
+            overflow:hidden;
+            position:relative;
+        }
+        .announcement p{
+            margin:0;
+            white-space:nowrap;
+            animation:scroll 12s linear infinite;
+        }
+        @keyframes scroll{
+            0%   {transform:translateX(100%);}
+            100% {transform:translateX(-100%);}
+        }
+        /* ---------- Server Info Card ---------- */
+        .info-card{
+            background:rgba(255,255,255,0.1);
+            border-radius:10px;
+            padding:20px;
+            margin:15px auto;
+            max-width:460px;
+            transition:transform .3s;
+        }
+        .info-card:hover{transform:translateY(-4px);}
+        .info-card strong{color:#ffdd57;}
+        /* ---------- Buttons ---------- */
+        .btn{
+            display:inline-block;
+            margin:12px 8px;
+            padding:12px 24px;
+            font-size:1rem;
+            color:#fff;
+            background:#ff5722;
+            border:none;
+            border-radius:6px;
+            cursor:pointer;
+            text-decoration:none;
+            transition:background .25s,transform .2s;
+        }
+        .btn:hover{
+            background:#e64a19;
+            transform:scale(1.05);
+        }
+        .btn.copy{background:#2196f3;}
+        .btn.copy:hover{background:#1976d2;}
+        /* ---------- QQ Section ---------- */
+        .qq-section{
+            margin-top:20px;
+            font-size:1rem;
+        }
+        .qq-section a{
+            color:#ffdd57;
+            text-decoration:none;
+            cursor:pointer;
+        }
+        .qq-section a:hover{text-decoration:underline;}
+        /* ---------- Play Card ---------- */
+        .play-card{
+            background:rgba(255,255,255,0.08);
+            border-radius:10px;
+            padding:20px;
+            margin:20px auto;
+            max-width:560px;
+            text-align:left;
+        }
+        .play-card h3{
+            margin-bottom:10px;
+            color:#ffdd57;
+        }
+        .play-card ul{
+            list-style:disc inside;
+            line-height:1.6;
+        }
+        /* ---------- Footer ---------- */
+        .footer{
+            margin-top:30px;
+            font-size:0.85rem;
+            opacity:0.7;
+        }
+        .footer a{
+            color:#ffdd57;
+            text-decoration:none;
+        }
+        .footer a:hover{text-decoration:underline;}
+        /* ---------- Responsive ---------- */
+        @media(max-width:600px){
+            h1{font-size:2.2rem;}
+            .subtitle{font-size:1rem;}
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+    <div class="container">
+        <!-- LOGO -->
+        <div class="logo"><img src="img/logo.png" alt="Server LOGO"></div>
 
+        <h1>⚔️ Bed Wars Server</h1>
+        <p class="subtitle">Server Version: Minecraft JE 1.21.1</p>
+
+        <!-- Announcement (you can add more lines) -->
+        <div class="announcement"><p>Welcome to Bed Wars! | Single‑Eight mode opened with 2 maps | 2v2 mode under development, coming soon | Lobby</p></div>
+
+        <!-- Server Information -->
+        <div class="info-card">
+            <p><strong>Server IP:</strong> om.rainplay.cn:26624</p>
+            <p><strong>Backup IP:</strong> omt.rainplay.cn:26624</p>
+        </div>
+
+        <!-- Buttons -->
+        <button class="btn copy" onclick="copyIP()">Copy IP</button>
+
+        <!-- QQ Group -->
+        <div class="qq-section">
+            <strong>Official QQ Group:</strong>
+            <a id="qq-number" onclick="copyQQ()">123456789</a> (click to copy)
+        </div>
+
+        <!-- Server Play Introduction -->
+        <div class="play-card">
+            <button class="btn copy" onclick="jump()">Report Cheating Player</button>
+            <button class="btn copy" onclick="goToParentIndex()">切换到中文(简体)</button>
+            <ul>
+                <!-- You can add play mode descriptions here -->
+            </ul>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            © 2025 <strong>om.rainplay.cn:26624</strong> ch2012enyc provides technical support
+        </div>
+    </div>
+
+    <script>
+        // Jump to the report page
+        function jump(){
+            window.location.href="./report.html";
+        }
+
+        // Switch language – go to the Chinese version (index.html?lang=zh_cn)
+        function goToParentIndex() {
+            const path = window.location.pathname;                     // e.g. /a/b/report.html
+            const parentPath = path.substring(0, path.lastIndexOf('/')); // /a/b
+            const grandParent = parentPath.substring(0, parentPath.lastIndexOf('/')); // /a
+            const target = `${grandParent}/index.html?lang=zh_cn`;
+            window.location.href = target;
+        }
+
+        // Copy server IP
+        function copyIP(){
+            const ip = "om.rainplay.cn:26624";
+            navigator.clipboard.writeText(ip).then(()=>alert("Server IP copied: " + ip));
+        }
+
+        // Copy QQ group number
+        function copyQQ(){
+            const qq = "123456789";
+            navigator.clipboard.writeText(qq).then(()=>alert("QQ group number copied: " + qq));
+        }
+    </script>
+</body>
+</html>
