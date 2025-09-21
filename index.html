@@ -2,39 +2,73 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>Wait for a minute</title>
+    <title> for a minute</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <style>
+        /* ---------- 页面基础 ---------- */
+        body{
+            margin:0;
+            font-family:Arial,Helvetica,sans-serif;
+            overflow:hidden;               /* 防止出现滚动条 */
+        }
+
+        /* ---------- 渐变遮罩层 ---------- */
+        .gradient{
+            position:fixed;
+            inset:0;                       /* top/right/bottom/left = 0 */
+            background:#0d0d0d;           /* 起始深色 */
+            z-index:9999;
+            /* 动画：深 → 黄 → 深 */
+            animation: dark2yellow2dark 1.2s forwards;   /* 2×1.2s，可自行修改 */
+        }
+
+        @keyframes dark2yellow2dark{
+            0%   {background:#0d0d0d;}   /* 深色 */
+            50%  {background:#76767a;}   /* 页面强调黄 */
+            100% {background:#0d0d0d;}   /* 再回到深色 */
+        }
+    </style>
 </head>
 <body>
-    <script>
-        // ① 读取 URL 中的查询参数
-        function getQueryParam(name) {
-            const params = new URLSearchParams(window.location.search);
-            return params.get(name);
-        }
 
-        // ② 根据 lang 参数决定跳转目标
-        const lang = getQueryParam('lang');   // 例如: "zh_cn"
-        if (lang) {
-            // 这里可以自行扩展更多语言的映射关系
-            const map = {
-                'zh_cn': './zh/main.html',
-                // 示例：如果以后还有英文页面，可继续添加
-                'en_us': './en/main.html',
-                // 'ja_jp': '/ja/main.html',
-            };
+<div class="gradient" id="mask"></div>
 
-            const target = map[lang.toLowerCase()];
-            if (target) {
-                // 使用 replace 防止产生历史记录（用户点击“返回”不会回到中间页）
-                window.location.replace(target);
-            } else {
-                // 未匹配到对应页面时的默认处理（可自行改为跳转首页等）
-                //console.warn(`未找到 lang="${lang}" 对应的页面`);
-            }
-        } else {
-            // 没有 lang 参数时的默认行为
-            window.location.href="./en/main.html"
-        }
-    </script>
+<script>
+/* ---------- 参数 & 配置 ---------- */
+const ANIMATION_DURATION = 1200;   // 与 CSS 中的 2.4s 保持一致（毫秒）
+
+/* ---------- 读取 URL 参数 ---------- */
+function getQueryParam(name){
+    return new URLSearchParams(window.location.search).get(name);
+}
+
+/* ---------- 跳转函数（瞬间切换） ---------- */
+function redirect(target, useReplace = true){
+    if (useReplace) {
+        window.location.replace(target);
+    } else {
+        window.location.href = target;
+    }
+}
+
+/* ---------- 主逻辑 ---------- */
+window.addEventListener('DOMContentLoaded', () => {
+    // 读取 lang 参数并决定跳转目标
+    const lang = getQueryParam('lang');   // 如 "?lang=zh_cn"
+    const map = {
+        'zh_cn': './zh/main.html',
+        'en_us': './en/main.html',
+        // 如需更多语言请自行添加
+    };
+    const target = (lang && map[lang.toLowerCase()]) ? map[lang.toLowerCase()] : './en/main.html';
+
+    // 动画结束后立即跳转
+    const mask = document.getElementById('mask');
+    mask.addEventListener('animationend', () => {
+        redirect(target, true);   // 使用 replace，避免产生历史记录
+    });
+});
+</script>
+
 </body>
 </html>
